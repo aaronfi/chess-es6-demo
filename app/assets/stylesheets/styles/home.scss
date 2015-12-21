@@ -1,0 +1,305 @@
+@import 'foundation/functions';  // gives us rem-calc()
+@import 'jquery-ui/resizable';
+@import 'base/shared';
+
+// NOTE: this disables the "bounce" in modern browsers when scrolling past page top or bottom.  http://stackoverflow.com/questions/12046315/prevent-overscrolling-of-web-page
+// It also ensures that the web browser's scrollbar (when scrolling) isn't drawn over the header and footer
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+body > div#topContainer {
+    height: 100%;
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
+}
+// /NOTE
+
+//    How to use rem and px together:
+//    You can set everything as e.g. 1.6rem, 2rem
+//    and then at the top-level, assign 1rem = n pixels
+//    You do this by setting the font-size of the <html> element
+//
+//    What does this give you?
+//    If you needed to double the size of everything on mobile devices, you could do e.g.
+//
+//    @media (...whatever size query, e.g. < 800px) body {
+//        font-size: 200%
+//    }
+//
+//    and now you've effectively zoomed in x2 onto your page.
+//
+//    Also see https://offroadcode.com/prototypes/rem-calculator/
+html {
+    font-size: 100%;  // effectively a 16px font
+}
+
+.bold {
+    font-weight: bolder;
+}
+
+.navbar {
+    padding: rem-calc(0 0 0 16);
+}
+
+.navbar-default {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background-color: white;
+    border-color: #e7e7e7;
+    letter-spacing: rem-calc(1) !important;
+
+    // vertically centers our variable height columns in the same row
+    display: flex;
+    align-items:center;
+}
+
+.navbar-nav .nav-item {
+    float: none;
+}
+
+.navbar-header {
+    width: 100%;
+    text-align: center;
+    display: inline-table;
+
+    li {
+        display: inline-flex;
+        white-space: nowrap;
+    }
+}
+
+ul.nav.navbar-nav {
+    font-size: rem-calc(16);
+}
+
+.container {
+    max-width: none;
+    text-align: center;
+}
+
+#topContainer {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center top;
+    background-color: #27ae60;
+    background-image: url(../assets/images/backgrounds/blackhole.jpg);
+
+    .row {
+        // vertically centers our variable height columns in the same row
+        display: -webkit-inline-box;
+        float: none;
+
+        align-items: center;
+        text-align: center;
+        -webkit-align-items: center;
+
+        white-space: nowrap;
+
+        #leftPane {
+            display: flex;
+            width: rem-calc(600);
+            white-space: nowrap;
+
+            #resizable {
+                padding: 0.5rem;
+                width: rem-calc(600);
+                min-width: rem-calc(600);
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: rem-calc(60);
+            }
+        }
+
+        #rightPane {
+            display: flex;
+            white-space: nowrap;
+            width: rem-calc(950);
+            min-width: rem-calc(850);
+
+            .row {
+                display: initial;
+                float: initial;
+            }
+
+            #games {
+                margin-top: rem-calc(73);
+
+                .selected-game {
+                    font-weight: bolder;
+                }
+
+                button {
+                    padding: rem-calc(7);
+                    &:hover {
+                        background-color: yellow;
+
+                        border: inherit;
+                        border-right-width: 2px;
+                        border-left-width: 2px;
+                        border-right-style: outset;
+                        border-left-style:outset;
+                    }
+                }
+            }
+
+            #possibleMoves {
+                background-color: rgba(0, 0, 0, 0.7);
+                color: white;
+                width: rem-calc(900);
+                font-family: monospace;
+                margin-right: rem-calc(30);
+                visibility: hidden;
+                border-color: black;
+
+                textarea {
+                    border-radius: 6px;
+                    width: rem-calc(900);
+                    font-family: monospace;
+                    border: none;
+                    overflow: auto;
+                    outline: none;
+                    -webkit-box-shadow: none;
+                    -moz-box-shadow: none;
+                    box-shadow: none;
+                }
+            }
+
+            #debug2 {
+                background-color: rgba(0, 0, 0, 0.7);
+                color: white;
+                width: rem-calc(900);
+                height: rem-calc(300);
+                font-family: monospace;
+                margin-right: rem-calc(30);
+                visibility: hidden;
+
+                textarea {
+                    border-radius: 6px;
+                    width: rem-calc(900);
+                    height: rem-calc(300);
+                    font-family: monospace;
+                    border: none;
+                    overflow: auto;
+                    outline: none;
+                    -webkit-box-shadow: none;
+                    -moz-box-shadow: none;
+                    box-shadow: none;
+                }
+            }
+
+            #debug {
+                background-color: rgba(0, 0, 0, 0.7);
+                color: white;
+                width: rem-calc(900);
+                height: rem-calc(60);
+                font-family: monospace;
+                margin-right: rem-calc(30);
+                visibility: hidden;
+                border-color: black;
+
+                textarea {
+                    border-radius: 6px;
+                    width: rem-calc(900);
+                    height: rem-calc(60);
+                    font-family: monospace;
+                    border: none;
+                    overflow: auto;
+                    outline: none;
+                    -webkit-box-shadow: none;
+                    -moz-box-shadow: none;
+                    box-shadow: none;
+                }
+            }
+        }
+    }
+}
+
+#debug1, #debug3 {  /* TODO(aaron,4/12) eventually remove this debug1, debug2 */
+    margin: rem-calc(8);
+    width: rem-calc(240);
+    color: white;
+    background-color: black;
+    height: rem-calc(260);
+    font-family: monospace;
+    resize: none;
+    border: none;
+    overflow: auto;
+    outline: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+#button1 {
+    clear:both;
+}
+
+#subheading {
+    text-align: center;
+    font-size: rem-calc(22);
+    font-weight: bold;
+    margin-top: 0;
+
+    .jqconsole-cursor {
+        -webkit-animation-name: blinker;
+        -moz-animation-name: blinker;
+        animation-name: blinker;
+        -webkit-animation-iteration-count: infinite;
+        -moz-animation-iteration-count: infinite;
+        animation-iteration-count: infinite;
+        -webkit-animation-timing-function: cubic-bezier(1, 0, 0, 1);
+        -moz-animation-timing-function: cubic-bezier(1, 0, 0, 1);
+        animation-timing-function: cubic-bezier(1, 0, 0, 1);
+        -webkit-animation-duration: 1s;
+        -moz-animation-duration: 1s;
+        animation-duration: 1s;
+        background: #aaa;
+
+        width: rem-calc(14);
+        height: rem-calc(16);
+        margin: rem-calc(2 -10 0 2);
+        display: inline-block;
+    }
+
+    .selected {
+        background-color: rgba(31, 119, 180, 0.7);
+    }
+
+    .user_0 {
+        background: #d62728
+    }
+
+    .user_1 {
+        background: #1f77b4
+    }
+}
+
+.move { margin: 1px; }
+.move:hover { background-color:yellow; }
+.movenumber { color: lightslategray; }
+.variation { margin: 1rem 0 1rem 1rem; padding:0.25rem; }
+#moves { margin: 1rem; }
+.highlight:hover { border-left: 1px solid #add8e6; }
+.selected {  border: 1px solid #add8e6;}
+
+.resizable-arrow {
+    @include disable-text-selection;
+
+    font-size: rem-calc(23);
+    color: white;
+   // background-image: none;
+    display: inline-block;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+
+    // suppress on ipad -- jQuery's resizable widget doesn't seem to work well.
+    @media only screen
+    and (min-device-width: 768px)
+    and (max-device-width: 1024px) {
+        display: none;
+    }
+}
+
+#button1 {
+    visibility: hidden;
+}

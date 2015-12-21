@@ -1,0 +1,34 @@
+# Heroku overwrites your database.yml file with its own, so
+# the only entries that really matter in this file here are the ones under "development",
+# for when you're running rails locally
+
+default: &default
+  adapter: postgresql
+  pool: 5
+  timeout: 5000
+  encoding: unicode
+
+development:
+  <<: *default
+  host: localhost
+  port: 5432
+  username: postgres
+  password: chessdemo
+  database: chessdemo_development
+
+  # Schema search path. The server defaults to $user,public
+  #schema_search_path: myapp,sharedapp,public
+
+  # Minimum log levels, in increasing order:
+  #   debug5, debug4, debug3, debug2, debug1,
+  #   log, notice, warning, error, fatal, and panic
+  # Defaults to warning.
+  #min_messages: notice
+
+test:
+  <<: *default
+  database: chessdemo_test
+
+production:
+  <<: *default
+  database: chessdemo_production
